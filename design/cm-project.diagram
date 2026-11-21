@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:al="http://eclipse.org/graphiti/mm/algorithms" xmlns:org.eclipse.hyundai.configurator="http:///org/eclipse/hyundai/configurator.ecore" xmlns:pi="http://eclipse.org/graphiti/mm/pictograms">
+  <pi:Diagram visible="true" gridUnit="10" diagramTypeId="hyundaiConfiguratorGraphiti" name="example" snapToGrid="true" pictogramLinks="/0/@children.0/@link /0/@children.1/@link /0/@children.2/@link /0/@children.3/@link /0/@children.4/@link /0/@children.5/@link /0/@children.6/@link /0/@children.7/@link /0/@children.8/@link" version="0.19.0">
+    <graphicsAlgorithm xsi:type="al:Rectangle" background="/0/@colors.1" foreground="/0/@colors.0" lineWidth="1" transparency="0.0" width="1000" height="1000"/>
+    <children xsi:type="pi:ContainerShape" visible="true" active="true">
+      <graphicsAlgorithm xsi:type="al:Image" lineWidth="1" transparency="0.0" width="269" height="122" x="350" y="430" id="org.eclipse.hyundai.Diagram.car" stretchH="false" stretchV="false" proportional="false"/>
+      <link businessObjects="/2"/>
+      <anchors xsi:type="pi:ChopboxAnchor" incomingConnections="/0/@connections.2"/>
+      <children visible="true">
+        <graphicsAlgorithm xsi:type="al:Text" foreground="/0/@colors.2" lineWidth="1" filled="false" transparency="0.0" width="269" height="122" verticalAlignment="ALIGNMENT_TOP" value="CAR"/>
+      </children>
+    </children>
+    <children xsi:type="pi:ContainerShape" visible="true" active="true">
+      <graphicsAlgorithm xsi:type="al:Image" lineWidth="1" transparency="0.0" width="1000" height="17" x="-50" y="290" id="org.eclipse.hyundai.Diagram.can0" stretchH="false" stretchV="false" proportional="false"/>
+      <link businessObjects="/1"/>
+      <anchors xsi:type="pi:ChopboxAnchor" outgoingConnections="/0/@connections.2"/>
+      <children visible="true">
+        <graphicsAlgorithm xsi:type="al:Text" foreground="/0/@colors.2" lineWidth="1" filled="false" transparency="0.0" width="1000" height="17" verticalAlignment="ALIGNMENT_BOTTOM" value="10.44.72.10"/>
+      </children>
+    </children>
+    <children xsi:type="pi:ContainerShape" visible="true" active="true">
+      <graphicsAlgorithm xsi:type="al:Image" lineWidth="1" transparency="0.0" width="100" height="86" x="430" y="140" id="org.eclipse.hyundai.Diagram.mc1ecu" stretchH="false" stretchV="false" proportional="false"/>
+      <link businessObjects="/3"/>
+      <anchors xsi:type="pi:ChopboxAnchor"/>
+      <anchors xsi:type="pi:BoxRelativeAnchor" visible="true" active="true" outgoingConnections="/0/@connections.0 /0/@connections.1 /0/@connections.4 /0/@connections.5 /0/@connections.6" incomingConnections="/0/@connections.3">
+        <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="25" height="30"/>
+      </anchors>
+      <children visible="true">
+        <graphicsAlgorithm xsi:type="al:Text" foreground="/0/@colors.2" lineWidth="1" filled="false" transparency="0.0" width="100" height="86" y="35" verticalAlignment="ALIGNMENT_BOTTOM" value="ECU0"/>
+      </children>
+    </children>
+    <children xsi:type="pi:ContainerShape" visible="true" active="true">
+      <graphicsAlgorithm xsi:type="al:Image" lineWidth="1" transparency="0.0" width="81" height="64" x="130" y="60" id="org.eclipse.hyundai.Diagram.swc" stretchH="false" stretchV="false" proportional="false"/>
+      <link businessObjects="/3/@swcRefs.1"/>
+      <anchors xsi:type="pi:ChopboxAnchor" incomingConnections="/0/@connections.1"/>
+      <children visible="true">
+        <graphicsAlgorithm xsi:type="al:Text" foreground="/0/@colors.2" lineWidth="1" filled="false" transparency="0.0" width="81" height="64" y="-25" verticalAlignment="ALIGNMENT_TOP" value="CC"/>
+      </children>
+    </children>
+    <children xsi:type="pi:ContainerShape" visible="true" active="true">
+      <graphicsAlgorithm xsi:type="al:Image" lineWidth="1" transparency="0.0" width="81" height="64" x="260" y="30" id="org.eclipse.hyundai.Diagram.swc" stretchH="false" stretchV="false" proportional="false"/>
+      <link businessObjects="/3/@swcRefs.0"/>
+      <anchors xsi:type="pi:ChopboxAnchor" incomingConnections="/0/@connections.0"/>
+      <children visible="true">
+        <graphicsAlgorithm xsi:type="al:Text" foreground="/0/@colors.2" lineWidth="1" filled="false" transparency="0.0" width="81" height="64" y="-25" verticalAlignment="ALIGNMENT_TOP" value="LK"/>
+      </children>
+    </children>
+    <children xsi:type="pi:ContainerShape" visible="true" active="true">
+      <graphicsAlgorithm xsi:type="al:Image" lineWidth="1" transparency="0.0" width="81" height="64" x="410" y="20" id="org.eclipse.hyundai.Diagram.swc" stretchH="false" stretchV="false" proportional="false"/>
+      <link businessObjects="/3/@swcRefs.6"/>
+      <anchors xsi:type="pi:ChopboxAnchor" outgoingConnections="/0/@connections.3"/>
+      <children visible="true">
+        <graphicsAlgorithm xsi:type="al:Text" foreground="/0/@colors.2" lineWidth="1" filled="false" transparency="0.0" width="81" height="64" y="-25" verticalAlignment="ALIGNMENT_TOP" value="SENSING"/>
+      </children>
+    </children>
+    <children xsi:type="pi:ContainerShape" visible="true" active="true">
+      <graphicsAlgorithm xsi:type="al:Image" lineWidth="1" transparency="0.0" width="81" height="64" x="590" y="30" id="org.eclipse.hyundai.Diagram.swc" stretchH="false" stretchV="false" proportional="false"/>
+      <link businessObjects="/3/@swcRefs.7"/>
+      <anchors xsi:type="pi:ChopboxAnchor" incomingConnections="/0/@connections.4"/>
+      <children visible="true">
+        <graphicsAlgorithm xsi:type="al:Text" foreground="/0/@colors.2" lineWidth="1" filled="false" transparency="0.0" width="81" height="64" y="-25" verticalAlignment="ALIGNMENT_TOP" value="BRAKE"/>
+      </children>
+    </children>
+    <children xsi:type="pi:ContainerShape" visible="true" active="true">
+      <graphicsAlgorithm xsi:type="al:Image" lineWidth="1" transparency="0.0" width="81" height="64" x="710" y="70" id="org.eclipse.hyundai.Diagram.swc" stretchH="false" stretchV="false" proportional="false"/>
+      <link businessObjects="/3/@swcRefs.8"/>
+      <anchors xsi:type="pi:ChopboxAnchor" incomingConnections="/0/@connections.5"/>
+      <children visible="true">
+        <graphicsAlgorithm xsi:type="al:Text" foreground="/0/@colors.2" lineWidth="1" filled="false" transparency="0.0" width="81" height="64" y="-25" verticalAlignment="ALIGNMENT_TOP" value="POWER"/>
+      </children>
+    </children>
+    <children xsi:type="pi:ContainerShape" visible="true" active="true">
+      <graphicsAlgorithm xsi:type="al:Image" lineWidth="1" transparency="0.0" width="81" height="64" x="800" y="170" id="org.eclipse.hyundai.Diagram.swc" stretchH="false" stretchV="false" proportional="false"/>
+      <link businessObjects="/3/@swcRefs.9"/>
+      <anchors xsi:type="pi:ChopboxAnchor" incomingConnections="/0/@connections.6"/>
+      <children visible="true">
+        <graphicsAlgorithm xsi:type="al:Text" foreground="/0/@colors.2" lineWidth="1" filled="false" transparency="0.0" width="81" height="64" y="-25" verticalAlignment="ALIGNMENT_TOP" value="LOCAL"/>
+      </children>
+    </children>
+    <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.2/@anchors.1" end="/0/@children.4/@anchors.0">
+      <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@colors.2" lineWidth="3" lineStyle="UNSPECIFIED"/>
+    </connections>
+    <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.2/@anchors.1" end="/0/@children.3/@anchors.0">
+      <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@colors.2" lineWidth="3" lineStyle="UNSPECIFIED"/>
+    </connections>
+    <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.1/@anchors.0" end="/0/@children.0/@anchors.0">
+      <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@colors.2" lineWidth="3" lineStyle="UNSPECIFIED"/>
+      <bendpoints x="500" y="311"/>
+    </connections>
+    <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.5/@anchors.0" end="/0/@children.2/@anchors.1">
+      <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@colors.2" lineWidth="3" lineStyle="UNSPECIFIED"/>
+    </connections>
+    <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.2/@anchors.1" end="/0/@children.6/@anchors.0">
+      <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@colors.2" lineWidth="3" lineStyle="UNSPECIFIED"/>
+    </connections>
+    <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.2/@anchors.1" end="/0/@children.7/@anchors.0">
+      <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@colors.2" lineWidth="3" lineStyle="UNSPECIFIED"/>
+    </connections>
+    <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.2/@anchors.1" end="/0/@children.8/@anchors.0">
+      <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@colors.2" lineWidth="3" lineStyle="UNSPECIFIED"/>
+    </connections>
+    <colors red="227" green="238" blue="249"/>
+    <colors red="255" green="255" blue="255"/>
+    <colors/>
+    <colors red="255"/>
+  </pi:Diagram>
+  <org.eclipse.hyundai.configurator:ETH bandwidth="0" id="10.44.72.10" canDB=""/>
+  <org.eclipse.hyundai.configurator:CAR canRef="/1" id="CAR"/>
+  <org.eclipse.hyundai.configurator:ECU canRef="/1" id="ECU0" numberOfCores="1" schedulingPolicy="RM" systemClock="100" targetArchitecture="SPC56EL70">
+    <swcRefs deadline="110" ecuRef="/3" id="LK;C;/home/rubis/ComputerModeling/CPSim/sharedObjectFiles/LK/LK.cpp" period="110" phase="0" wcet="30" bcet="30" readCon="1" writeCon="1"/>
+    <swcRefs deadline="110" ecuRef="/3" id="CC;C;/home/rubis/ComputerModeling/CPSim/sharedObjectFiles/CC/CC.cpp" period="110" phase="0" wcet="30" bcet="30" readCon="1" writeCon="1"/>
+    <swcRefs deadline="500" ecuRef="/3" id="SENSING;;" period="500" phase="0" wcet="50" bcet="50"/>
+    <swcRefs deadline="500" ecuRef="/3" id="BRAKE;;" period="500" phase="0" wcet="50" bcet="50"/>
+    <swcRefs deadline="500" ecuRef="/3" id="POWER;;" period="500" phase="0" wcet="50" bcet="50"/>
+    <swcRefs deadline="500" ecuRef="/3" id="LOCAL;;" period="500" phase="0" wcet="50" bcet="50"/>
+    <swcRefs deadline="500" ecuRef="/3" id="SENSING;C;/home/rubis/ComputerModeling/CPSim/sharedObjectFiles/SENSING/SENSING.cpp" period="500" phase="0" wcet="50" bcet="50"/>
+    <swcRefs deadline="500" ecuRef="/3" id="BRAKE;C;/home/rubis/ComputerModeling/CPSim/sharedObjectFiles/BRAKE/BRAKE.cpp" period="500" phase="0" wcet="50" bcet="50"/>
+    <swcRefs deadline="500" ecuRef="/3" id="POWER;C;/home/rubis/ComputerModeling/CPSim/sharedObjectFiles/POWER/POWER.cpp" period="500" phase="0" wcet="50" bcet="50"/>
+    <swcRefs deadline="500" ecuRef="/3" id="LOCAL;C;/home/rubis/ComputerModeling/CPSim/sharedObjectFiles/LOCAL/LOCAL.cpp" period="500" phase="0" wcet="50" bcet="50"/>
+  </org.eclipse.hyundai.configurator:ECU>
+</xmi:XMI>

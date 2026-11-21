@@ -16,3 +16,10 @@ CPSim_GUI/*
 *.swp
 .vscode/
 .idea/
+
+# Python caches
+__pycache__/
+*.pyc
+
+# Submission archive (built by tools/package_submission.sh)
+Team4_Final_Project.zip
