@@ -20,7 +20,10 @@ void EthernetClient::ethernet_read_write()
 	do
 	{
 		read_length = read(utils::socket_EHTERNET, read_buf, sizeof(read_buf));
-		if(read_length == -1)
+		// -1 is a socket error; 0 means TORCS closed the connection. Neither
+		// case filled read_buf, so treat both the same way instead of
+		// processing whatever uninitialized bytes happen to be in it.
+		if(read_length <= 0)
 		{
 			continue;
 		}

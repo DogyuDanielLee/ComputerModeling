@@ -570,6 +570,14 @@ void Job::add_history(std::shared_ptr<Job> new_deadline)
 void Job::run_function()
 {
     m_run_start = std::chrono::steady_clock::now();
+
+    if (get_is_read() && global_object::logger) {
+        global_object::logger->io_time = std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::steady_clock::now() - utils::simulator_start_time).count();
+        global_object::logger->io_operation = "READ";
+        global_object::logger->Team4_task_read_write_logger(get_task_name());
+    }
+
     if((get_is_read() == true) && (get_is_write() == true))
     {
         if(!global_object::tagged_data_read.empty())

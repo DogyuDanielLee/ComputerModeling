@@ -40,6 +40,12 @@ public:
     void print_job_execution_schedule();
     void print_offline_guider_status();
     void set_schedule_log_info(std::vector<std::shared_ptr<Task>>&);
+
+    long long io_time = 0;
+    std::string io_operation;
+    int task_index = 0;
+    void Team4_task_read_write_logger(std::string task_name);
+    void Team4_real_cyber_schedule_logger(long long time, int job_id, std::string event_type);
 };
 
 #endif

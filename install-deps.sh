@@ -7,10 +7,15 @@
 #   build-essential  compiles the engine (build.sh) and the SWC code during simulation
 #   cmake            configures the engine build (build.sh)
 #   GTK3             GUI toolkit (package is named libgtk-3-0t64 since Ubuntu 24.04)
+#
+# If this package has a packages/ folder next to this script (see
+# deploy/fetch-deps.sh), everything installs from there instead, so this
+# works with no internet access at all - e.g. straight off a USB stick.
 set -euo pipefail
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "$(readlink -f -- "${BASH_SOURCE[0]}")")" &>/dev/null && pwd)"
 CPSIM_DIR="$SCRIPT_DIR/CPSim"
+PACKAGES_DIR="$SCRIPT_DIR/packages"
 JAVA17="/usr/lib/jvm/java-17-openjdk-amd64/bin/java"   # run.sh uses the Java at this path
 
 log() { echo "[install-deps] $*"; }
@@ -27,17 +32,23 @@ if [ "$(id -u)" -ne 0 ]; then
 fi
 
 # 1) Install packages (apt skips the ones already installed)
-log "Updating package lists..."
-$SUDO apt-get update
-
-pkgs=(openjdk-17-jre build-essential cmake)
-if apt-cache show libgtk-3-0t64 >/dev/null 2>&1; then
-	pkgs+=(libgtk-3-0t64)
+if [ -d "$PACKAGES_DIR" ] && compgen -G "$PACKAGES_DIR/*.deb" >/dev/null; then
+	log "Found $PACKAGES_DIR: installing offline, no network needed."
+	$SUDO apt-get install -y "$PACKAGES_DIR"/*.deb
 else
-	pkgs+=(libgtk-3-0)
+	log "No packages/ folder found next to this script: installing from the network."
+	log "Updating package lists..."
+	$SUDO apt-get update
+
+	pkgs=(openjdk-17-jre build-essential cmake)
+	if apt-cache show libgtk-3-0t64 >/dev/null 2>&1; then
+		pkgs+=(libgtk-3-0t64)
+	else
+		pkgs+=(libgtk-3-0)
+	fi
+	log "Installing: ${pkgs[*]}"
+	$SUDO apt-get install -y "${pkgs[@]}"
 fi
-log "Installing: ${pkgs[*]}"
-$SUDO apt-get install -y "${pkgs[@]}"
 
 # 2) Check the result
 problems=0

@@ -53,6 +53,13 @@ int main(int argc, char *argv[])
      * SIGNAL FUNCTION IS FOR SIG_KILL : SIGNAL HANDLER
      */
     signal(SIGINT, utils::exit_simulation);
+    /**
+     * Task::run() calls send() on the TORCS socket (see Task.cpp); if TORCS
+     * closes the connection, the default SIGPIPE action kills this process.
+     * Ignore it so send() instead returns -1, which the caller already
+     * tolerates like any other socket error.
+     */
+    signal(SIGPIPE, SIG_IGN);
     
     /**
      * SYNTHETIC WORKLOAD SIMULATION OPTIONS

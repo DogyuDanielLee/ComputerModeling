@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include "Logger.h"
 #include <fstream>
+#include <tuple>
 
 /**
  *  This file is the cpp file for the Executor class.
@@ -108,6 +109,13 @@ bool Executor::run_simulation(JobVectorOfSimulator& job_vector_of_simulator, Job
     assign_predecessors_successors(job_vector_of_simulator);
     assign_deadline_for_simulated_jobs(job_vector_of_simulator);
     update_initialization(job_vector_of_simulator);
+
+    using event = std::tuple<long long, int, int, int, std::string>;
+    static std::vector<event> pending;
+    if (global_object::logger) {
+        global_object::logger->Team4_task_read_write_logger("");
+        global_object::logger->Team4_real_cyber_schedule_logger(0, 0, "");
+    }
 
     for(auto job : job_vector_of_simulator)
     {

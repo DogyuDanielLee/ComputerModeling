@@ -15,7 +15,7 @@
       <link businessObjects="/1"/>
       <anchors xsi:type="pi:ChopboxAnchor" outgoingConnections="/0/@connections.2"/>
       <children visible="true">
-        <graphicsAlgorithm xsi:type="al:Text" foreground="/0/@colors.2" lineWidth="1" filled="false" transparency="0.0" width="1000" height="17" verticalAlignment="ALIGNMENT_BOTTOM" value="192.174.0.100"/>
+        <graphicsAlgorithm xsi:type="al:Text" foreground="/0/@colors.2" lineWidth="1" filled="false" transparency="0.0" width="1000" height="17" verticalAlignment="ALIGNMENT_BOTTOM" value="10.44.72.10"/>
       </children>
     </children>
     <children xsi:type="pi:ContainerShape" visible="true" active="true">
@@ -59,7 +59,7 @@
     <colors red="255" green="255" blue="255"/>
     <colors/>
   </pi:Diagram>
-  <org.eclipse.hyundai.configurator:ETH bandwidth="0" id="192.174.0.100" canDB=""/>
+  <org.eclipse.hyundai.configurator:ETH bandwidth="0" id="10.44.72.10" canDB=""/>
   <org.eclipse.hyundai.configurator:ECU id="ECU0" numberOfCores="1" schedulingPolicy="RM" systemClock="100" targetArchitecture="SPC56EL70">
     <swcRefs deadline="100" ecuRef="/2" id="SWC1;C;@CPSIM_PATH@/sharedObjectFiles/LK/LK.cpp" period="100" phase="0" wcet="40" bcet="40" readCon="1" writeCon="1"/>
     <swcRefs deadline="100" ecuRef="/2" id="SWC0;C;@CPSIM_PATH@/sharedObjectFiles/CC/CC.cpp" period="100" phase="0" wcet="40" bcet="40" readCon="1" writeCon="1"/>
