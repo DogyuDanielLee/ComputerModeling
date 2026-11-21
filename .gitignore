@@ -1,0 +1,18 @@
+# Build output (regenerate with ./build.sh)
+CPSim/build/
+
+# Compiled SWCs (the engine rebuilds them when a simulation runs)
+*.so
+*.o
+
+# Vendor Eclipse GUI binaries (~124M, unchanged from the course package).
+# Keep only the small config and the workspace template.
+CPSim_GUI/*
+!CPSim_GUI/CPSim.ini
+!CPSim_GUI/workspace-template/
+
+# Editor / OS noise
+*~
+*.swp
+.vscode/
+.idea/
