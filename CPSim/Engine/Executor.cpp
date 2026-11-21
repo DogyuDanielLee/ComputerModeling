@@ -110,12 +110,12 @@ bool Executor::run_simulation(JobVectorOfSimulator& job_vector_of_simulator, Job
     assign_deadline_for_simulated_jobs(job_vector_of_simulator);
     update_initialization(job_vector_of_simulator);
 
-    using event = std::tuple<long long, int, int, int, std::string>;
-    static std::vector<event> pending;
-    if (global_object::logger) {
-        global_object::logger->Team4_task_read_write_logger("");
-        global_object::logger->Team4_real_cyber_schedule_logger(0, 0, "");
-    }
+    /**
+     * Homework #2 Case #2: log the schedule of the real cyber system for this hyper period.
+     * The real (ECU-side) start/finish time of every job is known at this point (see
+     * update_initialization), so the whole hyper period's schedule is logged here, sorted by time.
+     */
+    Team4_log_real_cyber_schedule(job_vector_of_simulator, end_time);
 
     for(auto job : job_vector_of_simulator)
     {
@@ -217,8 +217,65 @@ bool Executor::run_simulation(JobVectorOfSimulator& job_vector_of_simulator, Job
         }
     }
 
+    // Homework #2 Case #1: write this hyper period's buffered read/write log lines, sorted by time
+    if (global_object::logger)
+        global_object::logger->Team4_flush_read_write_log();
+
     utils::current_time = end_time;
     return true;
+}
+
+/**
+ * Homework #2 Case #2 (Team 4)
+ * Turns each job of the hyper period into RELEASED / STARTED / FINISHED / DEADLINE MISS events
+ * on the real cyber system's timeline and passes them to Team4_real_cyber_schedule_logger in
+ * time order. Events later than this hyper period (e.g. a late finish) are held back and
+ * merged with the next hyper period's events so the log stays sorted.
+ */
+void Executor::Team4_log_real_cyber_schedule(JobVectorOfSimulator& job_vector_of_simulator, double hyper_period_end)
+{
+    if (!global_object::logger) return;
+
+    // (time, event order at the same time, task number, job number, event type)
+    // At the same instant: releases first, then finishes, then starts, then deadline misses
+    // (a job finishing exactly at its deadline is not a miss), as in the slide's example.
+    using Event = std::tuple<long long, int, int, int, std::string>;
+    static std::vector<Event> pending;
+
+    int task_count = 0;
+    for (auto job : job_vector_of_simulator)
+        task_count = std::max(task_count, job->get_task_id() + 1);
+
+    for (auto job : job_vector_of_simulator)
+    {
+        const int task_number = job->get_task_id() + 1;
+        // get_job_id() restarts at 1 every hyper period; number jobs from the simulation start instead
+        const int job_number = (job->get_actual_release_time() - job->get_offset()) / job->get_period() + 1;
+        const long long release = job->get_actual_release_time();
+        const long long start = job->get_actual_start_time();
+        const long long finish = job->get_actual_finish_time();
+        const long long deadline = job->get_actual_deadline();
+
+        pending.emplace_back(release, 0, task_number, job_number, "RELEASED");
+        if (start >= 0)
+            pending.emplace_back(start, 2, task_number, job_number, "STARTED");
+        if (finish >= 0)
+            pending.emplace_back(finish, 1, task_number, job_number, "FINISHED");
+        if (start < 0 || finish < 0 || finish > deadline)
+            pending.emplace_back(deadline, 3, task_number, job_number, "DEADLINE MISS");
+    }
+
+    std::sort(pending.begin(), pending.end());
+    global_object::logger->schedule_task_count = task_count;
+
+    std::size_t written = 0;
+    for (; written < pending.size() && std::get<0>(pending[written]) < hyper_period_end; ++written)
+    {
+        const Event& event = pending[written];
+        global_object::logger->schedule_task_number = std::get<2>(event);
+        global_object::logger->Team4_real_cyber_schedule_logger(std::get<0>(event), std::get<3>(event), std::get<4>(event));
+    }
+    pending.erase(pending.begin(), pending.begin() + written);
 }
 
 void Executor::change_execution_time(JobVectorOfSimulator& job_vector_of_simulator)

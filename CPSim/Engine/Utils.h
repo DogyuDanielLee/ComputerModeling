@@ -12,6 +12,8 @@
 #include <queue>
 #include <fstream>
 #include <mutex>
+#include <map>
+#include <string>
 
 #include "Task.h"
 #include "Job.h"
@@ -57,6 +59,10 @@ namespace utils
     inline std::string cpsim_path = "";
     inline std::string ip_address = "";
     inline std::string log_task = "";
+    // Alias named in the project slides; same variable as log_task ("LK,CC" etc. from settings.txt)
+    inline std::string& log_task_name = log_task;
+    // SWC name (design.xml IP, e.g. "SWC0") -> base name of its source file (e.g. "CC"), filled by Specifier
+    inline std::map<std::string, std::string> swc_code_name;
     
     inline int hyper_period = 0;
     inline int socket_EHTERNET = 0;

@@ -1,3 +1,4 @@
+#include "Utils.h"
 #include "Specifier.h"
 #include "CodeWrapper.h"
 #include <stdio.h>
@@ -172,6 +173,11 @@ void Specifier::specify_the_system(EcuVector& ecu_vector, TaskVector& task_vecto
         }
 
         std::shared_ptr<Task> task = std::make_shared<Task>(task_id, period, deadline, wcet, bcet, offset, is_read, is_write, ecu_id, producers, consumers, task_vector.size(), ecu_vector);
+        {
+            // Remember which source file this SWC runs (".../CC/CC.cpp" -> "CC") for the read/write logger
+            std::string base = code_path.substr(code_path.find_last_of('/') + 1);
+            utils::swc_code_name[task_id] = base.substr(0, base.find_last_of('.'));
+        }
         CodeWrapper code_wrapper;
         std::string wrapped_code;
         std::string main_content = code_wrapper.extract_main_content(code_path);

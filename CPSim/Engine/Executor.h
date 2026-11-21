@@ -54,6 +54,7 @@ public:
     void update_simulated_deadlines(JobVectorOfSimulator&, int);
     void update_jobset(std::shared_ptr<Job>);
     bool run_simulation(JobVectorOfSimulator&, JobVectorsForEachECU&,  double);
+    void Team4_log_real_cyber_schedule(JobVectorOfSimulator&, double hyper_period_end);
     void change_execution_time(JobVectorOfSimulator&);
 
     void assign_deadline_for_simulated_jobs(JobVectorOfSimulator&);

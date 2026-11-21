@@ -571,13 +571,16 @@ void Job::run_function()
 {
     m_run_start = std::chrono::steady_clock::now();
 
-    if (get_is_read() && global_object::logger) {
-        global_object::logger->io_time = std::chrono::duration_cast<std::chrono::milliseconds>(
-            std::chrono::steady_clock::now() - utils::simulator_start_time).count();
-        global_object::logger->io_operation = "READ";
+    /**
+     * Homework #2 Case #1: log the job's data read (at its real start time, "Entry Read")
+     * and data write (at its real finish time, "Exit Write").
+     */
+    auto log_io = [this](const char* operation, int real_time) {
+        if (!global_object::logger) return;
+        global_object::logger->io_time = real_time;
+        global_object::logger->io_operation = operation;
         global_object::logger->Team4_task_read_write_logger(get_task_name());
-    }
-
+    };
     if((get_is_read() == true) && (get_is_write() == true))
     {
         if(!global_object::tagged_data_read.empty())
@@ -585,7 +588,9 @@ void Job::run_function()
             std::shared_ptr<TaggedData> current_data = global_object::tagged_data_read.at(global_object::tagged_data_read.size()-1);
             global_object::tagged_data_read.clear();
         }
+        log_io("READ", m_actual_start_time);
         run();
+        log_io("WRITE", m_actual_finish_time);
   
         std::shared_ptr<DelayedData> delayed_data = std::make_shared<DelayedData>();
         delayed_data->data_time = m_actual_finish_time;
@@ -601,11 +606,13 @@ void Job::run_function()
             std::shared_ptr<TaggedData> current_data = global_object::tagged_data_read.at(global_object::tagged_data_read.size()-1);
             global_object::tagged_data_read.clear();
         }
+        log_io("READ", m_actual_start_time);
         run();
     }
     else if((get_is_read() == false) && (get_is_write() == true))
     {
         run();
+        log_io("WRITE", m_actual_finish_time);
         
         #ifdef CANMODE__   
         CAN_message msg; 
