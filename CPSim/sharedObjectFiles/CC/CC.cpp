@@ -27,7 +27,12 @@ void sim_main()
   const double CC_ENABLE     = 6000.0;   // CC active only while CC_TRIGGER > this (skeleton logic)
   const double LK_ENABLE     = 5000.0;   // LK active only while rtU->read2 > this
 
+  const int    STALE_JOBS    = 2;        // same speed this many CC jobs in a row while moving -> stale
+  const int    MOVING_SPEED  = 100000;   // only check for stale data above ~10 km/h (start of race is still)
+
   static int lifting = 0;
+  static int last_speed = 0;
+  static int same_count = 0;
 
   unsigned int read1;
   int read2;
@@ -50,6 +55,15 @@ void sim_main()
   write5 = 0;
   write6 = 0;
   read2 = read2 / 100 - TARGET_OFFSET;
+
+  // Stale-data guard: a moving car never reports the exact same speed twice 110 ms apart.
+  // If TORCS values freeze (seen on the real setup, ~3 s), we are driving blind: lift off.
+  if (read3 == last_speed && (read3 > MOVING_SPEED || read3 < -MOVING_SPEED))
+    same_count++;
+  else
+    same_count = 0;
+  last_speed = read3;
+  int stale = (same_count >= STALE_JOBS);
 
   if (read4 > CC_ENABLE)
   {
@@ -77,6 +91,9 @@ void sim_main()
     {
       lifting = 0;
     }
+
+    if (stale)
+      write6 = 0;
   }
   else
   {

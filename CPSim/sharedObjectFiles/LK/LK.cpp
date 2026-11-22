@@ -25,15 +25,30 @@ void sim_main()
 
   const double KD = TD_MS / LK_PERIOD_MS;  // derivative gain per LK job
 
+  const int    STALE_JOBS   = 2;        // same input this many LK jobs in a row -> treat data as stale
+
   static double prev_error = 0.0;
   static int has_prev = 0;
+  static double last_raw = 0.0;
+  static int same_count = 0;
 
   double error = rtU->read1;
   double steer = 0.0;
 
-  if (rtU->read2 <= ENABLE_LEVEL)
+  // Stale-data guard: TORCS sends fresh values every ~30 ms, so a real moving car never gives
+  // the exact same lateral error twice in a row 110 ms apart. Seen on the real setup: the
+  // values froze for ~3 s while the car kept moving; holding the last steering command
+  // put it into the wall. While the input is frozen, steer straight.
+  if (error == last_raw && error != 0.0)
+    same_count++;
+  else
+    same_count = 0;
+  last_raw = error;
+  int stale = (same_count >= STALE_JOBS);
+
+  if (rtU->read2 <= ENABLE_LEVEL || stale)
   {
-    // LK disabled: no steering, and forget the old error so re-enabling does not kick
+    // LK disabled or input stale: no steering, and forget the old error so restarting does not kick
     has_prev = 0;
   }
   else
