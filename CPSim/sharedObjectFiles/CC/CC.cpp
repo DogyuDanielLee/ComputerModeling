@@ -10,9 +10,9 @@ void sim_main()
   // Outputs (to TORCS)  : BRAKE, ACCEL
   //
   // Speed target: target = TARGET_SPEED / 100 - TARGET_OFFSET (original formula).
-  //   TARGET_OFFSET = 400000 is the slide's baseline (CC speed 40 km/h).
-  //   TARGET_OFFSET = 4000 (skeleton) puts the target far above what the car can reach,
-  //   so CC asks for full acceleration the whole lap.
+  //   TORCS sends TARGET_SPEED = 80000000 and SPEED in units of 1/10000 km/h, so
+  //   TARGET_OFFSET = 4000 (skeleton) -> target 796000 = ~80 km/h (lap ~3:06 measured),
+  //   TARGET_OFFSET = 400000 (slide baseline) -> 40 km/h, and a negative offset goes faster.
   // Safety: if the lateral error is far beyond what LK can correct (steering saturated),
   //   the car is running wide in a corner, so lift off until it is back near the lane.
   //
@@ -20,7 +20,7 @@ void sim_main()
   // and state must stay inside it (static locals keep their value between jobs).
 
   // ---- tuning ----
-  const int    TARGET_OFFSET = 4000;     // 400000 = 40 km/h baseline, 4000 = flat out
+  const int    TARGET_OFFSET = -200000;  // target = 80 - (offset / 10000) km/h -> 100 km/h
   const int    LIFT_ENABLED  = 1;        // 0 -> exactly the original CC logic
   const double LIFT_ON       = 15000.0;  // |lateral error| that starts the lift (LK clamp is 10000)
   const double LIFT_OFF      = 8000.0;   // |lateral error| that ends it (hysteresis)
