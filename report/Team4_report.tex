@@ -182,13 +182,15 @@ excerpt. With the tuned controller the steering changes direction 0.39 times per
 3.46, never reaches the steering limit, and the RMS lateral error decreases from 5679 to 836. The
 first lap is also about 7\,s faster.
 
-\begin{table}[t]
+
+
+\begin{figure}[t]
 \centering\small
-\caption{Lane keeping before and after tuning at a CC target of 100\,km/h, measured on the testbed (5--135\,s of each run).}
+\captionof{table}{Lane keeping before and after tuning at a CC target of 100\,km/h, measured on the testbed (5--135\,s of each run).}
 \label{tab:lk}
 \begin{tabular}{lrr}
 \toprule
- & Previous (P + large D) & Tuned PID \\
+ & First variant (P + large D) & Tuned PID \\
 \midrule
 First lap time (s)                    & 77 & 70.3 \\
 Mean speed (km/h)                     & 96.4 & 101.4 \\
@@ -199,12 +201,11 @@ RMS lateral error                     & 5679 & 836 \\
 Max.\ $|$lateral error$|$             & 16307 & 3557 \\
 \bottomrule
 \end{tabular}
-\end{table}
 
-\begin{figure}[t]
+\vspace{8pt}
 \centering
 \includegraphics[width=0.82\linewidth]{figures/steering.pdf}
-\caption{Lateral error and steering command on the testbed. (a) First variant (P + large D). The
+\captionof{figure}{Lateral error and steering command on the testbed. (a) First variant (P + large D). The
 steering switches between the limits every few jobs. (b) Tuned PID controller. Both runs use a CC target of 100\,km/h.}
 \label{fig:steer}
 \end{figure}
