@@ -27,8 +27,9 @@ We design the cyber-system of a simulated vehicle that is controlled by two soft
 components, lane keeping (LK) and cruise control (CC), and four dummy components. All six
 components are mapped to a single ECU with rate-monotonic scheduling. In HW1 we choose task
 periods and execution times that satisfy the utilization constraints while running the
-controllers as often as possible, and we retune the controllers with data recorded from the
-TORCS--CPSim setup. The car completes a lap of E-Track 5 in 1\,min 10.27\,s with one ECU and no
+controllers as often as possible. We also modify the LK and CC code. LK becomes a PID controller
+whose gains are chosen with a model identified from data recorded on the testbed, and CC drives
+at a higher target speed with a throttle cut when the car leaves the lane. The car completes a lap of E-Track 5 in 1\,min 10.27\,s with one ECU and no
 deadline miss. In HW2 we implement two loggers in the CPSim engine. They record the data reads and
 writes of the control tasks and the release, start, finish, and deadline-miss events of every
 job, all in real-cyber-system time.
