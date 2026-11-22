@@ -23,3 +23,11 @@ __pycache__/
 
 # Submission archive (built by tools/package_submission.sh)
 Team4_Final_Project.zip
+
+# LaTeX build files
+report/*.aux
+report/*.log
+report/*.out
+report/*.fls
+report/*.fdb_latexmk
+report/Team4_report.pdf

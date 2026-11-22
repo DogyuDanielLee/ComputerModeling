@@ -54,8 +54,8 @@ def check_rules(design):
 
 
 def rm_response_times(design):
-    """Exact response-time analysis for fixed-priority RM on one core (ties: LK, CC, dummies)."""
-    order = sorted(design.items(), key=lambda kv: (kv[1][0], ["LK", "CC"].index(kv[0]) if kv[0] in ("LK", "CC") else 2))
+    """Exact response-time analysis for fixed-priority RM on one core (ties broken by task order in design.xml: CC, LK, dummies)."""
+    order = sorted(design.items(), key=lambda kv: (kv[1][0], ["CC", "LK"].index(kv[0]) if kv[0] in ("LK", "CC") else 2))
     result = {}
     for i, (name, (period, c)) in enumerate(order):
         r = c
