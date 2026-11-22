@@ -38,7 +38,7 @@ job, all in real-cyber-system time.
 \section{Introduction}
 Automotive control software runs as periodic tasks on ECUs, and the times at which a task reads
 its inputs and writes its outputs affect the behavior of the controlled system. CPSim is based on
-the functionally and temporally correct simulation method proposed by K.-S.~We et al.~\cite{we2017functionally}. The
+the functionally and temporally correct simulation method proposed by We et al.~\cite{we2017functionally}. The
 simulator first derives the start and finish time that each job would have on the ECU, and
 then performs the data read and data write of the job at those times. The simulated control loop
 therefore has the same input and output delays as the real one.
@@ -166,7 +166,7 @@ A least-squares fit gives
 where $d_k$ represents the effect of the track curvature. The coefficient of determination is
 $R^2 = 0.83$ for one run and $0.84$ for another. In closed-loop simulation with this model, the
 first variant reverses the steering direction about 2.8 times per second, which is of the same order
-as the 3.98 times per second measured on the testbed. We then searched proportional, derivative, and integral gains on the
+as the 3.5 times per second measured on the testbed. We then searched proportional, derivative, and integral gains on the
 model. Each candidate was also tested with the steering response doubled, since we expected the car to react
 more strongly to steering at higher speed. The selected controller is
 \begin{equation}
@@ -177,24 +177,26 @@ where the integral term is meant to remove the steady offset in long corners, an
 prevents wind-up.
 
 Table~\ref{tab:lk} compares the first variant and the tuned controller over the same 130\,s interval
-of two test runs, and Figure~\ref{fig:steer} shows a 15\,s excerpt. The two runs also used different
-CC targets. With the tuned controller the steering changes direction 0.39 times per second instead
-of 3.98, never reaches the steering limit, and the RMS lateral error decreases from 3762 to 836.
+of two test runs with the same CC target of 100\,km/h, and Figure~\ref{fig:steer} shows a 15\,s
+excerpt. With the tuned controller the steering changes direction 0.39 times per second instead of
+3.46, never reaches the steering limit, and the RMS lateral error decreases from 5679 to 836. The
+first lap is also about 7\,s faster.
 
 \begin{table}[t]
 \centering\small
-\caption{Lane keeping before and after tuning, measured on the testbed (5--135\,s of each run).}
+\caption{Lane keeping before and after tuning at a CC target of 100\,km/h, measured on the testbed (5--135\,s of each run).}
 \label{tab:lk}
 \begin{tabular}{lrr}
 \toprule
  & Previous (P + large D) & Tuned PID \\
 \midrule
-Mean speed (km/h)                     & 79.2 & 101.4 \\
-Steering direction changes per second & 3.98 & 0.39 \\
-Time at steering limit                & 27.2\% & 0.0\% \\
-Mean $|u|$                            & 6004 & 553 \\
-RMS lateral error                     & 3762 & 836 \\
-Max.\ $|$lateral error$|$             & 9840 & 3557 \\
+First lap time (s)                    & 77 & 70.3 \\
+Mean speed (km/h)                     & 96.4 & 101.4 \\
+Steering direction changes per second & 3.46 & 0.39 \\
+Time at steering limit                & 43.1\% & 0.0\% \\
+Mean $|u|$                            & 6972 & 553 \\
+RMS lateral error                     & 5679 & 836 \\
+Max.\ $|$lateral error$|$             & 16307 & 3557 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -202,8 +204,8 @@ Max.\ $|$lateral error$|$             & 9840 & 3557 \\
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.82\linewidth]{figures/steering.pdf}
-\caption{Lateral error and steering command on the testbed. (a) First variant (P + large D) at 80\,km/h. The
-steering switches between the limits every few jobs. (b) Tuned PID controller at 100\,km/h.}
+\caption{Lateral error and steering command on the testbed. (a) First variant (P + large D). The
+steering switches between the limits every few jobs. (b) Tuned PID controller. Both runs use a CC target of 100\,km/h.}
 \label{fig:steer}
 \end{figure}
 
@@ -322,7 +324,7 @@ higher speed, and through the higher cruise target. With these changes the car c
 1\,min 10.27\,s without a deadline miss. The two loggers record the data accesses and the job
 schedule in real-cyber-system time.
 
-\bibliographystyle{ieeetr}
+\bibliographystyle{plain}
 \bibliography{refs}
 
 \end{document}
