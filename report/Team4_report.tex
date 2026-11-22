@@ -178,7 +178,10 @@ prevents wind-up.
 
 Table~\ref{tab:lk} compares the first variant and the tuned controller over the same 130\,s interval
 of two test runs with the same CC target of 100\,km/h, and Figure~\ref{fig:steer} shows a 15\,s
-excerpt. With the tuned controller the steering changes direction 0.39 times per second instead of
+excerpt. The number of steering direction changes per second counts how often the sign of $u_k$
+flips between consecutive LK jobs, so a high value means that the car is steered left and right
+in turn. The RMS lateral error is the root mean square of $L_k$ over the interval and measures how
+closely the car follows the lane center. With the tuned controller the steering changes direction 0.39 times per second instead of
 3.46, never reaches the steering limit, and the RMS lateral error decreases from 5679 to 836. The
 first lap is also about 7\,s faster.
 
@@ -196,9 +199,7 @@ First lap time (s)                    & 77 & 70.3 \\
 Mean speed (km/h)                     & 96.4 & 101.4 \\
 Steering direction changes per second & 3.46 & 0.39 \\
 Time at steering limit                & 43.1\% & 0.0\% \\
-Mean $|u|$                            & 6972 & 553 \\
 RMS lateral error                     & 5679 & 836 \\
-Max.\ $|$lateral error$|$             & 16307 & 3557 \\
 \bottomrule
 \end{tabular}
 
