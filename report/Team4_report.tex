@@ -38,7 +38,7 @@ job, all in real-cyber-system time.
 \section{Introduction}
 Automotive control software runs as periodic tasks on ECUs, and the times at which a task reads
 its inputs and writes its outputs affect the behavior of the controlled system. CPSim is based on
-the functionally and temporally correct simulation method proposed by K.-S.~We et al.~\cite{we2017}. The
+the functionally and temporally correct simulation method proposed by K.-S.~We et al.~\cite{we2017functionally}. The
 simulator first derives the start and finish time that each job would have on the ECU, and
 then performs the data read and data write of the job at those times. The simulated control loop
 therefore has the same input and output delays as the real one.
@@ -202,8 +202,8 @@ Max.\ $|$lateral error$|$             & 9840 & 3557 \\
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.82\linewidth]{figures/steering.pdf}
-\caption{Lateral error and steering command on the testbed. (a) First variant (P + large D). The
-steering switches between the limits every few jobs. (b) Tuned PID controller at a higher speed.}
+\caption{Lateral error and steering command on the testbed. (a) First variant (P + large D) at 80\,km/h. The
+steering switches between the limits every few jobs. (b) Tuned PID controller at 100\,km/h.}
 \label{fig:steer}
 \end{figure}
 
@@ -322,11 +322,7 @@ higher speed, and through the higher cruise target. With these changes the car c
 1\,min 10.27\,s without a deadline miss. The two loggers record the data accesses and the job
 schedule in real-cyber-system time.
 
-\begin{thebibliography}{1}
-\bibitem{we2017}
-K.-S. We, S. Kim, W. Lee, and C.-G. Lee, ``Functionally and temporally correct simulation of
-cyber-systems for automotive systems,'' in \emph{Proc.\ IEEE Real-Time Systems Symposium (RTSS)},
-2017.
-\end{thebibliography}
+\bibliographystyle{ieeetr}
+\bibliography{refs}
 
 \end{document}
