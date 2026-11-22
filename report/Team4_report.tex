@@ -29,7 +29,7 @@ components are mapped to a single ECU with rate-monotonic scheduling. In HW1 we 
 periods and execution times that satisfy the utilization constraints while running the
 controllers as often as possible. We also modify the LK and CC code. LK becomes a PID controller
 whose gains are chosen with a model identified from data recorded on the testbed, and CC drives
-at a higher target speed with a throttle cut when the car leaves the lane. The car completes a lap of E-Track 5 in 1\,min 10.27\,s with one ECU and no
+at a higher target speed. The car completes a lap of E-Track 5 in 1\,min 10.27\,s with one ECU and no
 deadline miss. In HW2 we implement two loggers in the CPSim engine. They record the data reads and
 writes of the control tasks and the release, start, finish, and deadline-miss events of every
 job, all in real-cyber-system time.
@@ -212,11 +212,9 @@ CC computes its target from the TARGET\_SPEED signal and an offset. TORCS report
 of $10^{-4}$\,km/h. The baseline configuration uses an offset for 40\,km/h, while the offset in the
 provided code gives a target of about 80\,km/h. We raised the
 target to 100\,km/h and kept the original on/off logic, which requests acceleration below the target
-and releases the throttle above it. As a safety measure, CC also reads the lateral error and
-releases the throttle when $|L| > 15000$, a deviation at which the LK steering is already
-saturated. Acceleration resumes when $|L| < 8000$, and this hysteresis prevents rapid switching. During
-the final run the lateral error stayed below this threshold while driving, so the rule had no effect
-on the lap time.
+and releases the throttle above it. We also tested higher targets. The car completed the race at
+120 and 140\,km/h, but at 180 and 200\,km/h it spun out in the same corner. We kept 100\,km/h to
+have a margin for the demo setup.
 
 \subsection{Handling Stale Sensor Data}
 In two test runs, TORCS kept sending packets at the normal rate, but their contents remained
@@ -230,8 +228,8 @@ does not act at the start. The second freeze happened after we added this check.
 from about 83 to 64\,km/h and continued normally once new data arrived.
 
 \section{Results (HW1)}
-Figure~\ref{fig:lap} shows the TORCS screen after the final run. The race had three
-laps, and the best lap time is 1\,min 10.27\,s. This is 89.7\,s below the baseline time of
+Figure~\ref{fig:lap} shows the TORCS screen after the first lap of the final run. The first lap, which
+starts from standstill, took 1\,min 10.27\,s. This is 89.7\,s below the baseline time of
 2\,min 40\,s and corresponds to the maximum score. The engine log of this run covers 74 hyper periods,
 or 407\,s of simulated time. All 10\,656 jobs were released, started, and finished, and no deadline
 was missed.
@@ -239,7 +237,7 @@ was missed.
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.48\linewidth]{Team4_HW1_lap_time.png}
-\caption{TORCS after the final run on E-Track 5, with a best lap time of 1\,min 10.27\,s.}
+\caption{TORCS screen after the first lap of the final run on E-Track 5 (1\,min 10.27\,s).}
 \label{fig:lap}
 \end{figure}
 

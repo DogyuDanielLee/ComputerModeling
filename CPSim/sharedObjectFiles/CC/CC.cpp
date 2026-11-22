@@ -11,26 +11,21 @@ void sim_main()
   //
   // Speed target: target = TARGET_SPEED / 100 - TARGET_OFFSET (original formula).
   //   TORCS sends TARGET_SPEED = 80000000 and SPEED in units of 1/10000 km/h, so
-  //   TARGET_OFFSET = 4000 (skeleton) -> target 796000 = ~80 km/h (lap ~3:06 measured),
-  //   TARGET_OFFSET = 400000 (slide baseline) -> 40 km/h, and a negative offset goes faster.
-  // Safety: if the lateral error is far beyond what LK can correct (steering saturated),
-  //   the car is running wide in a corner, so lift off until it is back near the lane.
+  //   TARGET_OFFSET = 4000 (provided code) -> ~80 km/h, 400000 (slide baseline) -> 40 km/h,
+  //   and a negative offset goes faster (-200000 -> 100 km/h).
+  //   Tested on E-Track 5: 120 and 140 km/h complete the race, 180 and 200 km/h spin out.
+  //   We keep 100 km/h for margin.
   //
   // NOTE: the engine compiles only the body of this function, so all tuning constants
   // and state must stay inside it (static locals keep their value between jobs).
 
   // ---- tuning ----
   const int    TARGET_OFFSET = -200000;  // target = 80 - (offset / 10000) km/h -> 100 km/h
-  const int    LIFT_ENABLED  = 1;        // 0 -> exactly the original CC logic
-  const double LIFT_ON       = 15000.0;  // |lateral error| that starts the lift (LK clamp is 10000)
-  const double LIFT_OFF      = 8000.0;   // |lateral error| that ends it (hysteresis)
   const double CC_ENABLE     = 6000.0;   // CC active only while CC_TRIGGER > this (skeleton logic)
-  const double LK_ENABLE     = 5000.0;   // LK active only while rtU->read2 > this
 
   const int    STALE_JOBS    = 2;        // same speed this many CC jobs in a row while moving -> stale
   const int    MOVING_SPEED  = 100000;   // only check for stale data above ~10 km/h (start of race is still)
 
-  static int lifting = 0;
   static int last_speed = 0;
   static int same_count = 0;
 
@@ -56,8 +51,8 @@ void sim_main()
   write6 = 0;
   read2 = read2 / 100 - TARGET_OFFSET;
 
-  // Stale-data guard: a moving car never reports the exact same speed twice 110 ms apart.
-  // If TORCS values freeze (seen on the real setup, ~3 s), we are driving blind: lift off.
+  // Stale-data guard: a moving car does not report the exact same speed twice 110 ms apart.
+  // If TORCS values freeze (seen on the testbed, 1.5-3 s), we are driving blind: release the throttle.
   if (read3 == last_speed && (read3 > MOVING_SPEED || read3 < -MOVING_SPEED))
     same_count++;
   else
@@ -74,30 +69,8 @@ void sim_main()
     else if (read3 > read2)
       write6 = 0;
 
-    double lateral = rtU->read1;
-    if (lateral < 0.0) lateral = -lateral;
-
-    if (LIFT_ENABLED && rtU->read2 > LK_ENABLE)
-    {
-      if (lifting && lateral < LIFT_OFF)
-        lifting = 0;
-      else if (!lifting && lateral > LIFT_ON)
-        lifting = 1;
-
-      if (lifting)
-        write6 = 0;
-    }
-    else
-    {
-      lifting = 0;
-    }
-
     if (stale)
       write6 = 0;
-  }
-  else
-  {
-    lifting = 0;
   }
 
   /********************************************/
